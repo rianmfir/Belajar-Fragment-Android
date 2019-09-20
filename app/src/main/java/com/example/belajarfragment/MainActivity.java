@@ -16,9 +16,14 @@ public class MainActivity extends AppCompatActivity {
 
         FragmentManager mFragmentManager = getSupportFragmentManager();
         FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
+
         HomeFragment mHomeFragment = new HomeFragment();
 
         Fragment fragment = mFragmentManager.findFragmentByTag(HomeFragment.class.getSimpleName());
+
+        /*
+        Kode di bawah ini digunakan untuk memvalidasi apakah suatu fragment adalah instance dari suatu kelas
+         */
         if (!(fragment instanceof HomeFragment)) {
             mFragmentTransaction.add(R.id.frame_container, mHomeFragment, HomeFragment.class.getSimpleName());
             Log.d("MyFlexibleFragment","Fragment Name : " + HomeFragment.class.getSimpleName());
