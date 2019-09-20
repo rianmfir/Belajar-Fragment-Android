@@ -1,6 +1,7 @@
 package com.example.belajarfragment;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,9 +15,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
+// Fragment untuk Dialog
 public class OptionDialogFragment extends DialogFragment implements View.OnClickListener {
     Button btnChoose, btnClose;
     RadioGroup rgOptions;
@@ -27,11 +26,9 @@ public class OptionDialogFragment extends DialogFragment implements View.OnClick
         // Required empty public constructor
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_option_dialog, container, false);
     }
 
@@ -50,11 +47,29 @@ public class OptionDialogFragment extends DialogFragment implements View.OnClick
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        Fragment fragment = getParentFragment();
+
+        if (fragment instanceof DetailCategoryFragment) {
+            DetailCategoryFragment detailCategoryFragment = (DetailCategoryFragment) fragment;
+            this.optionDialogListener = detailCategoryFragment.optionDialogListener;
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        this.optionDialogListener = null;
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_close:
                 getDialog().cancel();
                 break;
+
             case R.id.btn_choose:
                 int checkedRadioButtonId = rgOptions.getCheckedRadioButtonId();
                 if (checkedRadioButtonId != -1) {
@@ -63,16 +78,20 @@ public class OptionDialogFragment extends DialogFragment implements View.OnClick
                         case R.id.rb_saf:
                             coach = rbSaf.getText().toString().trim();
                             break;
+
                         case R.id.rb_mou:
                             coach = rbMou.getText().toString().trim();
                             break;
+
                         case R.id.rb_lvg:
                             coach = rbLvg.getText().toString().trim();
                             break;
+
                         case R.id.rb_moyes:
                             coach = rbMoyes.getText().toString().trim();
                             break;
                     }
+
                     if (optionDialogListener != null) {
                         optionDialogListener.onOptionChosen(coach);
                     }
@@ -85,7 +104,4 @@ public class OptionDialogFragment extends DialogFragment implements View.OnClick
     public interface OnOptionDialogListener {
         void onOptionChosen(String text);
     }
-
-
-
 }

@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
+// MENGIRIM DATA ANTAR FRAGMENT
 public class DetailCategoryFragment extends Fragment implements View.OnClickListener {
     TextView tvCategoryName;
     TextView tvCategoryDescription;
@@ -82,6 +82,7 @@ public class DetailCategoryFragment extends Fragment implements View.OnClickList
         switch (v.getId()){
             case R.id.btn_profile:
                 break;
+
             case R.id.btn_show_dialog:
                 OptionDialogFragment mOptionDialogFragment = new OptionDialogFragment();
 
